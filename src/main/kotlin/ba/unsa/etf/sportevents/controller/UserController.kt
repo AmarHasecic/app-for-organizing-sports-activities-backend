@@ -33,7 +33,7 @@ class UserController(private val userRepository: UserRepository) {
     }
 
     @PutMapping("/{username}")
-    fun createUser(@PathVariable username: String,@RequestBody user: User): ResponseEntity<User>  {
+    fun updateUser(@PathVariable username: String,@RequestBody user: User): ResponseEntity<User>  {
 
         val oldUser = this.userRepository.findById(username).orElse(null)
         this.userRepository.deleteById(oldUser.username)

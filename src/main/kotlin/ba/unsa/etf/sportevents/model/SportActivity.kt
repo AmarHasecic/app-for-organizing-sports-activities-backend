@@ -8,8 +8,7 @@ import java.time.LocalDateTime
 class SportActivity(
 
     @Id
-    val id: String,
-
+    var id: String,
     var title: String,
     var sport: String,
     var description: String,
@@ -18,6 +17,6 @@ class SportActivity(
     var endTime: LocalDateTime,
     var numberOfParticipants: Int = 0,
     var maxNumberOfParticipants: Int,
-    var participants: User
+    var participants: List<User>
 
 )
