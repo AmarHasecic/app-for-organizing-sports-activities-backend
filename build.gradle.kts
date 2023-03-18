@@ -26,6 +26,7 @@ dependencies {
 	testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.1")
 	testImplementation("io.mockk:mockk:1.10.4")
 	implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
+	implementation ("org.springframework.security:spring-security-core:5.6.0")
 }
 
 tasks.withType<KotlinCompile> {
