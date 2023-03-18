@@ -7,6 +7,7 @@ import java.time.LocalDateTime
 @Document
 class SportActivity(
 
+
     @Id
     var id: String,
     var title: String,

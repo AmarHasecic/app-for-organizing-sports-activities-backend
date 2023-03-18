@@ -10,6 +10,20 @@ import java.util.*
 @RequestMapping("/activities")
 class SportActivityController(private val activityRepository: SportActivityRepository) {
 
+    private fun generateId(): String{
+        var id = UUID.randomUUID().toString().replace("-", "")
+
+        // Check if ID already exists in database
+        var existingItem = this.activityRepository.findById(id)
+        while (existingItem.isPresent) {
+            // If ID already exists, recursively call this function to generate a new ID
+            id = UUID.randomUUID().toString().replace("-", "")
+            existingItem = this.activityRepository.findById(id)
+        }
+
+        return id;
+    }
+
 
     @GetMapping("/")
     fun getActivities(): ResponseEntity<List<SportActivity>> {
@@ -27,18 +41,7 @@ class SportActivityController(private val activityRepository: SportActivityRepos
     @PostMapping("/")
     fun createActivity(@RequestBody activity: SportActivity): ResponseEntity<SportActivity> {
 
-
-            var id = UUID.randomUUID().toString().replace("-", "")
-
-            // Check if ID already exists in database
-            var existingItem = this.activityRepository.findById(id)
-            while (existingItem.isPresent) {
-                // If ID already exists, recursively call this function to generate a new ID
-                id = UUID.randomUUID().toString().replace("-", "")
-                existingItem = this.activityRepository.findById(id)
-            }
-
-        activity.id = id;
+        activity.id = generateId();
         return ResponseEntity.ok(this.activityRepository.save(activity))
     }
 
@@ -46,6 +49,7 @@ class SportActivityController(private val activityRepository: SportActivityRepos
     fun updateActivity(@PathVariable id: String, @RequestBody activity: SportActivity): ResponseEntity<SportActivity> {
 
         val oldActivity = this.activityRepository.findById(id).orElse(null)
+        activity.id = oldActivity.id
         this.activityRepository.deleteById(id)
         return ResponseEntity.ok(activityRepository.save(activity))
     }
