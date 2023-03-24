@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*
 @RequestMapping("/users")
 class UserController(private val userRepository: UserRepository) {
 
-    @GetMapping("/")
+    @GetMapping("")
     fun getUsers(): ResponseEntity<List<User>> {
 
         return ResponseEntity.ok(this.userRepository.findAll())
@@ -25,7 +25,7 @@ class UserController(private val userRepository: UserRepository) {
         return ResponseEntity.ok(this.userRepository.findById(username).orElse(null))
     }
 
-    @PostMapping("/")
+    @PostMapping("")
     fun createUser(@RequestBody user: User): ResponseEntity<Any> {
 
         if (userRepository.existsById(user.username)) {

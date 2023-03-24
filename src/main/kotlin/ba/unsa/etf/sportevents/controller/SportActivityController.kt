@@ -25,7 +25,7 @@ class SportActivityController(private val activityRepository: SportActivityRepos
     }
 
 
-    @GetMapping("/")
+    @GetMapping("")
     fun getActivities(): ResponseEntity<List<SportActivity>> {
 
         return ResponseEntity.ok(this.activityRepository.findAll())
@@ -38,7 +38,7 @@ class SportActivityController(private val activityRepository: SportActivityRepos
         return ResponseEntity.ok(activitiesByTitle)
     }
 
-    @PostMapping("/")
+    @PostMapping("")
     fun createActivity(@RequestBody activity: SportActivity): ResponseEntity<SportActivity> {
 
         activity.id = generateId();
