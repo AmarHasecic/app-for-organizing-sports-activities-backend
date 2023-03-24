@@ -13,6 +13,12 @@ import org.springframework.web.bind.annotation.*
 @RequestMapping("/users")
 class UserController(private val userRepository: UserRepository) {
 
+    private fun hashPassword(password: String): String{
+
+        val passwordEncoder: PasswordEncoder = BCryptPasswordEncoder()
+        return passwordEncoder.encode(password)
+    }
+
     @GetMapping("")
     fun getUsers(): ResponseEntity<List<User>> {
 
@@ -32,11 +38,7 @@ class UserController(private val userRepository: UserRepository) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("User with username ${user.username} already exists")
         }
 
-        //password hashing
-        val passwordEncoder: PasswordEncoder = BCryptPasswordEncoder()
-        user.password = passwordEncoder.encode(user.password)
-
-
+        user.password = hashPassword(user.password)
         return ResponseEntity.ok(this.userRepository.save(user))
     }
 
@@ -45,6 +47,8 @@ class UserController(private val userRepository: UserRepository) {
 
         val oldUser = this.userRepository.findById(username).orElse(null)
         this.userRepository.deleteById(oldUser.username)
+
+        user.password = hashPassword(user.password)
         return ResponseEntity.ok(userRepository.save(user))
     }
 
