@@ -54,4 +54,4 @@ jobs:
           app-name: 'sportevens'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_CA3E7BBEA52A4E079C049D41AEE3F9E7 }}
-          package: '*.jar'
+          package: 'java-app.jar'
