@@ -50,3 +50,7 @@ tasks.register("createJar", Jar::class) {
 	}
 	from(sourceSets["main"].output)
 }
+
+tasks.bootJar {
+	archiveFileName.set("sportevents.jar")
+}
