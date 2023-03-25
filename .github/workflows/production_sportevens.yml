@@ -25,7 +25,7 @@ jobs:
         run: ./gradlew clean build
 
       - name: List files in target directory
-        run: ls -R /home/runner/work/app-for-organizing-sports-activities-backend/target/
+        run: ls -R /home/runner/work/app-for-organizing-sports-activities-backend/app-for-organizing-sports-activities-backend/build/libs/
 
 
       - name: Upload artifact for deployment job
