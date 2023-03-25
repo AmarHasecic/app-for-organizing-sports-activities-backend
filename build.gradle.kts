@@ -1,11 +1,14 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
+
+
 plugins {
 	id("org.springframework.boot") version "2.7.0"
 	id("io.spring.dependency-management") version "1.0.11.RELEASE"
 	kotlin("jvm") version "1.6.10"
 	kotlin("plugin.spring") version "1.6.10"
 }
+
 group = "ba.unsa.etf"
 version = "0.0.1-SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_17
@@ -26,7 +29,7 @@ dependencies {
 	testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.1")
 	testImplementation("io.mockk:mockk:1.10.4")
 	implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
-	implementation ("org.springframework.security:spring-security-core:5.6.0")
+	implementation("org.springframework.security:spring-security-core:5.6.0")
 }
 
 tasks.withType<KotlinCompile> {
@@ -40,13 +43,10 @@ tasks.withType<Test> {
 	useJUnitPlatform()
 }
 
-bootJar {
-	mainClassName = 'com.example.MyApplication'
-}
-
-jar {
-	enabled = true
-	archiveFileName = 'sportevents.jar'
-	duplicatesStrategy = 'exclude'
-	from(configurations.runtimeClasspath.get().filter { it.name.endsWith('.jar') }).into('libs')
+tasks.register("createJar", Jar::class) {
+	archiveFileName.set("sportevents.jar")
+	manifest {
+		attributes(mapOf("Main-Class" to "ba.un.etf.sportevents.SporteventsApplication"))
+	}
+	from(sourceSets["main"].output)
 }
