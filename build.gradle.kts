@@ -43,14 +43,6 @@ tasks.withType<Test> {
 	useJUnitPlatform()
 }
 
-tasks.register("createJar", Jar::class) {
-	archiveFileName.set("sportevents.jar")
-	manifest {
-		attributes(mapOf("Main-Class" to "ba.un.etf.sportevents.SporteventsApplication"))
-	}
-	from(sourceSets["main"].output)
-}
-
 tasks.bootJar {
 	archiveFileName.set("sportevents.jar")
 }
