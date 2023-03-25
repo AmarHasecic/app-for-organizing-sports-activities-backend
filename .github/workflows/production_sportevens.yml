@@ -32,7 +32,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: java-app
-          path: '${{ github.workspace }}/target/*.jar'
+          path: '/home/runner/work/app-for-organizing-sports-activities-backend/app-for-organizing-sports-activities-backend/build/libs/sportevents.jar'
 
   deploy:
     runs-on: ubuntu-latest
@@ -54,7 +54,7 @@ jobs:
           app-name: 'sportevens'
           slot-name: 'production'
           publish-profile: ${{ secrets.AzureAppService_PublishProfile_551e9c128b8041ddbe703f2255e72185 }}
-          package: '*.jar'
+          package: '/home/runner/work/app-for-organizing-sports-activities-backend/app-for-organizing-sports-activities-backend/build/libs/sportevents.jar'
           
           
           
