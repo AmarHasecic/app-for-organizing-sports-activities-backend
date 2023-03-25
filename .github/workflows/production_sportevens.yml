@@ -24,6 +24,9 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew build
 
+      - name: Create JAR file
+        run: ./gradlew createJar
+
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
         with:
