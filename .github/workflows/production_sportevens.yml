@@ -57,7 +57,7 @@ jobs:
         with:
           app-name: 'sportevens'
           slot-name: 'production'
-          publish-profile: ${{ secrets.AzureAppService_PublishProfile_551e9c128b8041ddbe703f2255e72185 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_CA3E7BBEA52A4E079C049D41AEE3F9E7}}
           package: '/home/runner/work/app-for-organizing-sports-activities-backend/app-for-organizing-sports-activities-backend/build/libs/sportevents.jar'
           
           
