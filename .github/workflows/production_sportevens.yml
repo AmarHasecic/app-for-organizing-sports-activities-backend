@@ -49,7 +49,7 @@ jobs:
           name: sportevents
 
       - name: List files in target directory
-        run: ls -R /home/runner/work/app-for-organizing-sports-activities-backend/app-for-organizing-sports-activities-backend/build/libs/
+        run: ls -R /home/runner/work/app-for-organizing-sports-activities-backend/app-for-organizing-sports-activities-backend/
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
