@@ -39,3 +39,14 @@ tasks.withType<KotlinCompile> {
 tasks.withType<Test> {
 	useJUnitPlatform()
 }
+
+bootJar {
+	mainClassName = 'com.example.MyApplication'
+}
+
+jar {
+	enabled = true
+	archiveFileName = 'sportevents.jar'
+	duplicatesStrategy = 'exclude'
+	from(configurations.runtimeClasspath.get().filter { it.name.endsWith('.jar') }).into('libs')
+}
