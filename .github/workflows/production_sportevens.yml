@@ -24,6 +24,10 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew build
 
+      - name: Remove JAR files
+        run: rm -f target/*.jar
+
+
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
         with:
