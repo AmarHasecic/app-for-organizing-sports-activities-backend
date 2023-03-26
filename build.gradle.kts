@@ -42,6 +42,8 @@ tasks.withType<Test> {
 	useJUnitPlatform()
 }
 
+/*
 tasks.bootJar {
 	archiveFileName.set("sportevents.jar")
 }
+*/
