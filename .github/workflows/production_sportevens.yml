@@ -15,6 +15,11 @@ jobs:
 
     steps:
 
+      - name: Login via Az module
+        uses: azure/login@v1
+        with:
+            creds: ${{secrets.AZURE_CREDENTIALS}}
+            enable-AzPSSession: true
       - uses: actions/checkout@v2
 
       - name: Set up Java version
@@ -57,7 +62,7 @@ jobs:
         with:
           app-name: 'sportevens'
           slot-name: 'production'
-          publish-profile: ${{ secrets.AzureAppService_PublishProfile_1b9aa36af0b54f2fa87cbcaad4ddb175 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_CA3E7BBEA52A4E079C049D41AEE3F9E7 }}
           package: '/home/runner/work/app-for-organizing-sports-activities-backend/app-for-organizing-sports-activities-backend/sportevents.jar'
           
           
