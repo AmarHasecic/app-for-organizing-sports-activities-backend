@@ -18,8 +18,9 @@ jobs:
       - name: Login via Az module
         uses: azure/login@v1
         with:
-            creds: ${{secrets.AZURE_CREDENTIALS}}
+            creds: ${{secrets.AZUREAPPSERVICE_PUBLISHPROFILE_CA3E7BBEA52A4E079C049D41AEE3F9E7}}
             enable-AzPSSession: true
+
       - uses: actions/checkout@v2
 
       - name: Set up Java version
