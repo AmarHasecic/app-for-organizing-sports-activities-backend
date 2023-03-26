@@ -3,7 +3,6 @@
 
 name: Build and deploy JAR app to Azure Web App - sportevents
 
-
 on:
   push:
     branches:
@@ -12,10 +11,9 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
-
       - uses: actions/checkout@v2
 
       - name: Set up Java version
@@ -23,44 +21,33 @@ jobs:
         with:
           java-version: '17'
 
-      - name: Build with Gradle
-        run: ./gradlew clean build
-
-      - name: List files in target directory
-        run: ls -R /home/runner/work/app-for-organizing-sports-activities-backend/app-for-organizing-sports-activities-backend/build/libs/
-
+      - name: Build with Maven
+        run: mvn clean install
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
         with:
-          name: sportevents
-          path: '/home/runner/work/app-for-organizing-sports-activities-backend/app-for-organizing-sports-activities-backend/build/libs/sportevents-0.0.1-SNAPSHOT-plain.jar'
+          name: java-app
+          path: '${{ github.workspace }}/target/*.jar'
 
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     needs: build
     environment:
-      name: 'production'
+      name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
 
     steps:
       - name: Download artifact from build job
         uses: actions/download-artifact@v2
         with:
-          name: sportevents
-
-      - name: List files in target directory
-        run: ls -R /home/runner/work/app-for-organizing-sports-activities-backend/app-for-organizing-sports-activities-backend/
+          name: java-app
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
         with:
           app-name: 'sportevents'
-          slot-name: 'production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_A904F2E7F61346E0BCFB4A7855A7788F }}
-          package: '/home/runner/work/app-for-organizing-sports-activities-backend/app-for-organizing-sports-activities-backend/sportevents-0.0.1-SNAPSHOT-plain.jar'
-
-
-
-
+          slot-name: 'Production'
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_49D7CE086F25465F97E816D9E02CDD30 }}
+          package: '*.jar'
