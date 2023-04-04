@@ -1,11 +1,13 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
+
 plugins {
 	id("org.springframework.boot") version "2.7.0"
 	id("io.spring.dependency-management") version "1.0.11.RELEASE"
 	kotlin("jvm") version "1.6.10"
 	kotlin("plugin.spring") version "1.6.10"
 }
+
 group = "ba.unsa.etf"
 version = "0.0.1-SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_17
@@ -26,7 +28,7 @@ dependencies {
 	testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.1")
 	testImplementation("io.mockk:mockk:1.10.4")
 	implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
-	implementation ("org.springframework.security:spring-security-core:5.6.0")
+	implementation("org.springframework.security:spring-security-core:5.6.0")
 }
 
 tasks.withType<KotlinCompile> {
@@ -39,3 +41,9 @@ tasks.withType<KotlinCompile> {
 tasks.withType<Test> {
 	useJUnitPlatform()
 }
+
+/*
+tasks.bootJar {
+	archiveFileName.set("sportevents.jar")
+}
+*/

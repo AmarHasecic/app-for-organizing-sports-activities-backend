@@ -1,0 +1,65 @@
+# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
+# More GitHub Actions for Azure: https://github.com/Azure/actions
+
+name: Build and deploy JAR app to Azure Web App - sportevents
+
+on:
+  push:
+    branches:
+      - production
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - uses: actions/checkout@v2
+
+      - name: Set up Java version
+        uses: actions/setup-java@v1
+        with:
+          java-version: '17'
+
+      - name: Build with Gradle
+        run: ./gradlew clean build
+
+      - name: List files in target directory
+        run: ls -R /home/runner/work/app-for-organizing-sports-activities-backend/app-for-organizing-sports-activities-backend/build/libs/
+
+
+      - name: Upload artifact for deployment job
+        uses: actions/upload-artifact@v2
+        with:
+          name: sportevents
+          path: '/home/runner/work/app-for-organizing-sports-activities-backend/app-for-organizing-sports-activities-backend/build/libs/sportevents-0.0.1-SNAPSHOT-plain.jar'
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    environment:
+      name: 'production'
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+
+    steps:
+      - name: Download artifact from build job
+        uses: actions/download-artifact@v2
+        with:
+          name: sportevents
+
+      - name: List files in target directory
+        run: ls -R /home/runner/work/app-for-organizing-sports-activities-backend/app-for-organizing-sports-activities-backend/
+
+      - name: Deploy to Azure Web App
+        id: deploy-to-webapp
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: 'sportevents'
+          slot-name: 'production'
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_742C3619C73043D7A820DF4944832591 }}
+          package: '/home/runner/work/app-for-organizing-sports-activities-backend/app-for-organizing-sports-activities-backend/sportevents-0.0.1-SNAPSHOT-plain.jar'
+
+
+
+
