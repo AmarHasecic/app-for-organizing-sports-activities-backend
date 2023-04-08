@@ -29,6 +29,20 @@ dependencies {
 	testImplementation("io.mockk:mockk:1.10.4")
 	implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
 	implementation("org.springframework.security:spring-security-core:5.6.0")
+	implementation("org.springframework.security:spring-security-web:5.5.0")
+
+	//security
+	/*
+	implementation("org.springframework.security:spring-security-config:5.5.0")
+	*/
+
+
+	//Json Web Token
+	implementation ("io.jsonwebtoken:jjwt-api:0.11.2")
+	implementation ("io.jsonwebtoken:jjwt-impl:0.11.2")
+	implementation ("io.jsonwebtoken:jjwt-jackson:0.11.2")
+
+
 }
 
 tasks.withType<KotlinCompile> {
