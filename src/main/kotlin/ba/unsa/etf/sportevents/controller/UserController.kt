@@ -41,7 +41,7 @@ class UserController(private val userRepository: UserRepository) {
     }
 
     @GetMapping("/user")
-    fun getUserById(@RequestHeader("Authorization") token: String): ResponseEntity<User> {
+    fun getUser(@RequestHeader("Authorization") token: String): ResponseEntity<User> {
         val userIdFromToken = JwtUtil.getUserIdFromToken(token.substringAfter("Bearer ").trim())
 
         if (!JwtUtil.validateToken(token.substringAfter("Bearer ").trim())) {

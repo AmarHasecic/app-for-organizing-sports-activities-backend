@@ -12,11 +12,11 @@ data class User(
         var id: String,
 
         var username: String,
-        var firstName: String,
-        var lastName: String,
+        var fullName: String,
         var email: String,
         var password: String,
         var dateOfBirth: LocalDate,
         var sports: List<Sport>,
         var activities: List<SportActivity>
 )
+        
