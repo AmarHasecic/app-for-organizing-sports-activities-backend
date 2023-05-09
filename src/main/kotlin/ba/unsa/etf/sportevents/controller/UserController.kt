@@ -59,7 +59,6 @@ class UserController(private val userRepository: UserRepository) {
         return ResponseEntity.ok(user.get())
     }
 
-
     @PostMapping("/user")
     fun createUser(@RequestBody user: User): ResponseEntity<Any> {
 
