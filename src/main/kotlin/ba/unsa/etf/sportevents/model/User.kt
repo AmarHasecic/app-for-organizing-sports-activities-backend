@@ -16,7 +16,7 @@ data class User(
         var email: String,
         var password: String,
         var dateOfBirth: LocalDate,
-        var sports: List<Sport>,
+        var sports: List<String>,
         var activities: List<SportActivity>
 )
         

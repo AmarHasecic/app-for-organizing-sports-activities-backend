@@ -4,8 +4,9 @@ import org.springframework.data.mongodb.core.mapping.Document
 
 @Document(collection = "sports")
 class Basketball(
+      id: String?,
       name: String,
       val playersPerTeam: Int = 5,
-      val gameDuration: Int = 48
+      val gameDuration: Int = 48,
 
-): Sport(name)
+): Sport(id,name)

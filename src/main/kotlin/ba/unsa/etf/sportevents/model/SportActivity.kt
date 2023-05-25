@@ -14,7 +14,7 @@ class SportActivity(
     var id: String,
     var host: User,
     var title: String,
-    var sport: Sport,
+    var sport: String,
     var description: String,
     var location: Location,
     var startTime: LocalDateTime,

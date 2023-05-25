@@ -1,55 +1,33 @@
 package ba.unsa.etf.sportevents.controller
 
-import ba.unsa.etf.sportevents.model.sports.Sport
+import ba.unsa.etf.sportevents.model.sports.Basketball
+import ba.unsa.etf.sportevents.repository.SportRepository
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/api/sports")
-class SportController {
+class SportController(private val sportRepository: SportRepository) {
 
-    private val sports: MutableList<Sport> = mutableListOf()
+    @PostMapping("/basketball")
+    fun createBasketball(@RequestBody basketball: Basketball): ResponseEntity<Basketball> {
 
-    @GetMapping
-    fun getAllSports(): ResponseEntity<List<Sport>> {
-        return ResponseEntity.ok(sports)
-    }
-
-    @GetMapping("/{id}")
-    fun getSportById(@PathVariable id: String): ResponseEntity<Sport> {
-        val sport = sports.find { it.id == id }
-        return if (sport != null) {
-            ResponseEntity.ok(sport)
-        } else {
-            ResponseEntity.notFound().build()
+        val basketballFromDatabase = sportRepository.findById("Basketball").orElse(null) as? Basketball
+        if(basketballFromDatabase != null){
+            return ResponseEntity.status(HttpStatus.CONFLICT).build()
+        }
+        else {
+            val createdBasketball = sportRepository.save(basketball)
+            return ResponseEntity.status(HttpStatus.CREATED).body(createdBasketball)
         }
     }
 
-    @PostMapping
-    fun createSport(@RequestBody sport: Sport): ResponseEntity<Unit> {
-        sports.add(sport)
-        return ResponseEntity.status(HttpStatus.CREATED).build()
-    }
-
-    @PutMapping("/{id}")
-    fun updateSport(@PathVariable id: String, @RequestBody updatedSport: Sport): ResponseEntity<Unit> {
-        val sport = sports.find { it.id == id }
-        return if (sport != null) {
-            sports.remove(sport)
-            sports.add(updatedSport)
-            ResponseEntity.ok().build()
-        } else {
-            ResponseEntity.notFound().build()
-        }
-    }
-
-    @DeleteMapping("/{id}")
-    fun deleteSport(@PathVariable id: String): ResponseEntity<Unit> {
-        val sport = sports.find { it.id == id }
-        return if (sport != null) {
-            sports.remove(sport)
-            ResponseEntity.ok().build()
+    @GetMapping("/basketball")
+    fun getBasketball(): ResponseEntity<Basketball> {
+        val basketball = sportRepository.findById("Basketball").orElse(null) as? Basketball
+        return if (basketball != null) {
+            ResponseEntity.ok(basketball)
         } else {
             ResponseEntity.notFound().build()
         }
