@@ -19,7 +19,7 @@ class SportActivity(
     var location: Location,
     var startTime: LocalDateTime,
     var endTime: LocalDateTime,
-    var numberOfParticipants: Int = 0,
+    var numberOfParticipants: Int,
     var maxNumberOfParticipants: Int,
     var participants: List<User>
 

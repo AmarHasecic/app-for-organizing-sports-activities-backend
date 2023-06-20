@@ -1,5 +1,6 @@
 package ba.unsa.etf.sportevents.controller
 
+import ba.unsa.etf.sportevents.model.Location
 import ba.unsa.etf.sportevents.model.SportActivity
 import ba.unsa.etf.sportevents.repository.SportActivityRepository
 import org.springframework.http.ResponseEntity
@@ -60,6 +61,22 @@ class SportActivityController(private val activityRepository: SportActivityRepos
         return ResponseEntity.ok("Activity successfully deleted.")
     }
 
+    @GetMapping("/nearby")
+    fun getActivitiesNearby(
+        @RequestParam latitude: Double,
+        @RequestParam longitude: Double
+    ): ResponseEntity<List<SportActivity>> {
 
+        val searchRadius = 10.0 // 10 kilometers
+
+        val currentLocation = Location(latitude, longitude, "Current Location")
+
+        val activitiesNearby = activityRepository.findAll().filter { activity ->
+            val activityLocation = Location(activity.location.latitude, activity.location.longitude, activity.location.name)
+            currentLocation.calculateDistance(activityLocation) <= searchRadius
+        }
+
+        return ResponseEntity.ok(activitiesNearby)
+    }
 
 }

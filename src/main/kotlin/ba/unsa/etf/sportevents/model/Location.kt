@@ -9,7 +9,7 @@ class Location (
     val name: String
 ){
 
-    fun distanceTo(other: Location): Double {
+    fun calculateDistance(other: Location): Double {
         val earthRadius = 6371 // Earth's radius in kilometers
         val lat1 = Math.toRadians(this.latitude)
         val lat2 = Math.toRadians(other.latitude)
