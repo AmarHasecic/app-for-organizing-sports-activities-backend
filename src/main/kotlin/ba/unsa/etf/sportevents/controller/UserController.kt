@@ -5,10 +5,8 @@ import ba.unsa.etf.sportevents.model.User
 import ba.unsa.etf.sportevents.repository.UserRepository
 import ba.unsa.etf.sportevents.security.JwtUtil
 import ba.unsa.etf.sportevents.security.PasswordEncryptor
-import io.jsonwebtoken.Jwts
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.web.bind.annotation.*
@@ -22,10 +20,8 @@ class UserController(private val userRepository: UserRepository) {
     private fun generateId(): String{
         var id = UUID.randomUUID().toString().replace("-", "")
 
-        // Check if ID already exists in database
         var existingItem = this.userRepository.findById(id)
         while (existingItem.isPresent) {
-            // If ID already exists, recursively call this function to generate a new ID
             id = UUID.randomUUID().toString().replace("-", "")
             existingItem = this.userRepository.findById(id)
         }
@@ -42,7 +38,7 @@ class UserController(private val userRepository: UserRepository) {
 
     @GetMapping("/user")
     fun getUser(@RequestHeader("Authorization") token: String): ResponseEntity<User> {
-        val userIdFromToken = JwtUtil.getUserIdFromToken(token.substringAfter("Bearer ").trim())
+        val userIdFromToken = JwtUtil.getIdFromToken(token.substringAfter("Bearer ").trim())
 
         if (!JwtUtil.validateToken(token.substringAfter("Bearer ").trim())) {
             // Return an HTTP 401 Unauthorized response if the token is invalid or has expired

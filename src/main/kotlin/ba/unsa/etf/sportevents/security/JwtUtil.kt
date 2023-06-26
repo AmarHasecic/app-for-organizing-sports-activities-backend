@@ -18,7 +18,7 @@ object JwtUtil {
             .compact()
     }
 
-    fun getUserIdFromToken(token: String): String {
+    fun getIdFromToken(token: String): String {
         val claims = Jwts.parser()
             .setSigningKey(SECRET)
             .parseClaimsJws(token)

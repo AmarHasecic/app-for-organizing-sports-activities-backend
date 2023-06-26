@@ -67,16 +67,20 @@ class SportActivityController(private val activityRepository: SportActivityRepos
         @RequestParam longitude: Double
     ): ResponseEntity<List<SportActivity>> {
 
+        println("Latitude: $latitude")
+        println("Longitude: $longitude")
+
         val searchRadius = 10.0 // 10 kilometers
 
-        val currentLocation = Location(latitude, longitude, "Current Location")
+        val currentLocation = Location(latitude, longitude)
 
         val activitiesNearby = activityRepository.findAll().filter { activity ->
-            val activityLocation = Location(activity.location.latitude, activity.location.longitude, activity.location.name)
+            val activityLocation = Location(activity.location.latitude, activity.location.longitude)
             currentLocation.calculateDistance(activityLocation) <= searchRadius
         }
 
         return ResponseEntity.ok(activitiesNearby)
     }
+
 
 }

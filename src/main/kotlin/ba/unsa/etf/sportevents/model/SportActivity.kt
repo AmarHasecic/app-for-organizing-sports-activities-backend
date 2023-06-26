@@ -1,6 +1,5 @@
 package ba.unsa.etf.sportevents.model
 
-import ba.unsa.etf.sportevents.model.sports.Sport
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
 import java.time.Duration
