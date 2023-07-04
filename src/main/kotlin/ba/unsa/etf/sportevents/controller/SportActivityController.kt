@@ -39,8 +39,8 @@ class SportActivityController(private val activityRepository: SportActivityRepos
         return ResponseEntity.ok(activitiesByTitle)
     }
 
-    @GetMapping("/{id}")
-    fun getActivity(@PathVariable id: String): ResponseEntity<SportActivity> {
+    @GetMapping("/activity/{id}")
+    fun getActivityById(@PathVariable id: String): ResponseEntity<SportActivity> {
         return ResponseEntity.ok(this.activityRepository.findById(id).orElse(null))
     }
 
