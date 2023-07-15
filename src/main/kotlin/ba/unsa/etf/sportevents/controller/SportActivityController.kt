@@ -74,10 +74,10 @@ class SportActivityController(private val activityRepository: SportActivityRepos
 
         val searchRadius = 10.0 // 10 kilometers
 
-        val currentLocation = Location(latitude, longitude)
+        val currentLocation = Location(latitude, longitude, "")
 
         val activitiesNearby = activityRepository.findAll().filter { activity ->
-            val activityLocation = Location(activity.location.latitude, activity.location.longitude)
+            val activityLocation = Location(activity.location.latitude, activity.location.longitude,"")
             currentLocation.calculateDistance(activityLocation) <= searchRadius
         }
 
