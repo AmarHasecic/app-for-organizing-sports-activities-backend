@@ -5,7 +5,8 @@ import kotlin.math.*
 @Document
 class Location (
     val latitude: Double,
-    val longitude: Double
+    val longitude: Double,
+    val name: String
 ){
 
     fun calculateDistance(other: Location): Double {
