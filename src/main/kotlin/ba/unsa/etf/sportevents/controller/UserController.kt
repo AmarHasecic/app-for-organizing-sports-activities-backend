@@ -10,8 +10,32 @@ import org.springframework.http.ResponseEntity
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.web.bind.annotation.*
+import java.security.MessageDigest
 import java.util.*
 
+
+fun hashPassword(password: String): String {
+    // Convert the password to bytes (required by the MessageDigest)
+    val passwordBytes = password.toByteArray()
+
+    // Create a SHA-256 MessageDigest instance
+    val sha256Digest = MessageDigest.getInstance("SHA-256")
+
+    // Update the digest with the password bytes
+    val hashedBytes = sha256Digest.digest(passwordBytes)
+
+    // Convert the hashed bytes to a hexadecimal string
+    val hashedPassword = StringBuilder()
+    for (byte in hashedBytes) {
+        val hexString = Integer.toHexString(0xFF and byte.toInt())
+        if (hexString.length == 1) {
+            hashedPassword.append('0')
+        }
+        hashedPassword.append(hexString)
+    }
+
+    return hashedPassword.toString()
+}
 
 @RestController
 @RequestMapping("/api")
@@ -63,7 +87,7 @@ class UserController(private val userRepository: UserRepository) {
         }
 
         user.id = generateId();
-        user.password = PasswordEncryptor(user.password).hashPassword()
+        user.password = hashPassword(user.password)
         return ResponseEntity.ok(this.userRepository.save(user))
     }
 
@@ -73,7 +97,7 @@ class UserController(private val userRepository: UserRepository) {
         val oldUser = this.userRepository.findById(id).orElse(null)
         this.userRepository.deleteById(oldUser.username)
 
-        user.password = PasswordEncryptor(user.password).hashPassword()
+        user.password = hashPassword(user.password)
         return ResponseEntity.ok(userRepository.save(user))
     }
 
@@ -85,20 +109,18 @@ class UserController(private val userRepository: UserRepository) {
 
     @PostMapping("/login")
     fun login(@RequestBody body: LoginDTO): ResponseEntity<Any> {
-
         val user: User? = userRepository.findByUsername(body.username)
-        val passwordEncoder: PasswordEncoder = BCryptPasswordEncoder()
 
         if (user != null) {
-            val encodedPassword = user.password
-            if (passwordEncoder.matches(body.password, encodedPassword)) {
+            val storedHashedPassword = user.password
+            val enteredPasswordHash = hashPassword(body.password)
 
-
-                val jwt = JwtUtil.generateToken(user.id);
+            if (storedHashedPassword == enteredPasswordHash) {
+                val jwt = JwtUtil.generateToken(user.id)
                 return ResponseEntity.ok(mapOf("jwt" to jwt))
-
+            } else {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Password incorrect")
             }
-            else  return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Password incorrect")
         }
 
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not found")
