@@ -95,9 +95,14 @@ class UserController(private val userRepository: UserRepository) {
     fun updateUser(@PathVariable id: String, @RequestBody user: User): ResponseEntity<User> {
 
         val oldUser = this.userRepository.findById(id).orElse(null)
-        this.userRepository.deleteById(oldUser.username)
 
-        user.password = hashPassword(user.password)
+        if(user.password.isBlank()){
+            user.password = oldUser.password
+        }
+        else{
+            user.password = hashPassword(user.password)
+        }
+        this.userRepository.deleteById(oldUser.username)
         return ResponseEntity.ok(userRepository.save(user))
     }
 
@@ -115,11 +120,11 @@ class UserController(private val userRepository: UserRepository) {
             val storedHashedPassword = user.password
             val enteredPasswordHash = hashPassword(body.password)
 
-            if (storedHashedPassword == enteredPasswordHash) {
+            return if (storedHashedPassword == enteredPasswordHash) {
                 val jwt = JwtUtil.generateToken(user.id)
-                return ResponseEntity.ok(mapOf("jwt" to jwt))
+                ResponseEntity.ok(mapOf("jwt" to jwt))
             } else {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Password incorrect")
+                ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Password incorrect")
             }
         }
 
