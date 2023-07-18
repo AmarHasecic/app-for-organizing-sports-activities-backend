@@ -72,7 +72,7 @@ class SportActivityController(private val activityRepository: SportActivityRepos
         @RequestParam longitude: Double
     ): ResponseEntity<List<SportActivity>> {
 
-        val searchRadius = 10.0 // 10 kilometers
+        val searchRadius = 10.0
 
         val currentLocation = Location(latitude, longitude, "")
 
