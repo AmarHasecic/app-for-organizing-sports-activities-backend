@@ -84,7 +84,7 @@ class SportActivityController(private val activityRepository: SportActivityRepos
         return ResponseEntity.ok(activitiesNearby)
     }
 
-    @GetMapping("/{hostId}")
+    @GetMapping("/host/{hostId}")
     fun getActivitiesByHostId(@PathVariable hostId: String): ResponseEntity<List<SportActivity>> {
 
         val activities = this.activityRepository.findAll().filter { it.host.id == hostId }
