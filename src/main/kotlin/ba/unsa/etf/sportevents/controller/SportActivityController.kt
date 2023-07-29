@@ -3,13 +3,17 @@ package ba.unsa.etf.sportevents.controller
 import ba.unsa.etf.sportevents.model.Location
 import ba.unsa.etf.sportevents.model.SportActivity
 import ba.unsa.etf.sportevents.repository.SportActivityRepository
+import ba.unsa.etf.sportevents.repository.UserRepository
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import java.util.*
 
 @RestController
 @RequestMapping("/activities")
-class SportActivityController(private val activityRepository: SportActivityRepository) {
+class SportActivityController(
+    private val activityRepository: SportActivityRepository,
+    private val userRepository: UserRepository
+) {
 
     private fun generateId(): String{
         var id = UUID.randomUUID().toString().replace("-", "")
@@ -62,8 +66,23 @@ class SportActivityController(private val activityRepository: SportActivityRepos
 
     @DeleteMapping("/{id}")
     fun deleteActivity(@PathVariable id: String): ResponseEntity<String> {
-        this.activityRepository.deleteById(id)
-        return ResponseEntity.ok("Activity successfully deleted.")
+
+        val activity = activityRepository.findById(id).orElse(null)
+        if (activity != null) {
+
+            //delete activity from list of activities of every user that joined
+            val users = this.userRepository.findAll()
+            users.forEach{user ->
+                user.activities.dropWhile { sportActivity -> sportActivity == activity }
+                userRepository.save(user)
+            }
+            activityRepository.deleteById(id)
+
+
+            return ResponseEntity.ok("Activity successfully deleted.")
+        } else {
+            return ResponseEntity.notFound().build()
+        }
     }
 
     @GetMapping("/nearby")
@@ -90,6 +109,4 @@ class SportActivityController(private val activityRepository: SportActivityRepos
         val activities = this.activityRepository.findAll().filter { it.host.id == hostId }
         return ResponseEntity.ok(activities)
     }
-
-
 }

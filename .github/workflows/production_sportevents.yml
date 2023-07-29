@@ -57,7 +57,7 @@ jobs:
         with:
           app-name: 'sportevents'
           slot-name: 'production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_742C3619C73043D7A820DF4944832591 }}
+          publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE }}
           package: '/home/runner/work/app-for-organizing-sports-activities-backend/app-for-organizing-sports-activities-backend/sportevents-0.0.1-SNAPSHOT-plain.jar'
 
 

@@ -1,14 +1,11 @@
 package ba.unsa.etf.sportevents.controller
 
-import ba.unsa.etf.sportevents.dtos.LoginDTO
+import ba.unsa.etf.sportevents.model.LoginDTO
 import ba.unsa.etf.sportevents.model.User
 import ba.unsa.etf.sportevents.repository.UserRepository
 import ba.unsa.etf.sportevents.security.JwtUtil
-import ba.unsa.etf.sportevents.security.PasswordEncryptor
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
-import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.web.bind.annotation.*
 import java.security.MessageDigest
 import java.util.*

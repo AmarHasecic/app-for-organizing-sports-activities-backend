@@ -1,4 +1,4 @@
-package ba.unsa.etf.sportevents.dtos
+package ba.unsa.etf.sportevents.model
 
 class LoginDTO {
     val username = ""
