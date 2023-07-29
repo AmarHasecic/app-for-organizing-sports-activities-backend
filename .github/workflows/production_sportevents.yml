@@ -28,6 +28,14 @@ jobs:
       - name: List files in target directory
         run: ls -R /home/runner/work/app-for-organizing-sports-activities-backend/app-for-organizing-sports-activities-backend/build/libs/
 
+      - name: Replace placeholders with secrets
+        env:
+          MONGODB_URI: ${{ secrets.MONGO_URI }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
+        run: |
+          sed -i "s|${MONGO_URI}|${{ secrets.MONGO_URI }}|g" src/main/resources/application.properties
+          sed -i "s|${JWT_SECRET}|${{ secrets.JWT_SECRET }}|g" src/main/resources/application.properties   
+
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
