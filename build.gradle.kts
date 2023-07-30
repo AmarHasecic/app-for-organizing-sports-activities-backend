@@ -33,6 +33,7 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
 	implementation("org.springframework.security:spring-security-core:5.7.7")
 	implementation("org.springframework.security:spring-security-web:5.7.7")
+	implementation ("org.springframework.boot:spring-boot-starter-actuator")
 
 	//security
 	/*
@@ -58,9 +59,3 @@ tasks.withType<KotlinCompile> {
 tasks.withType<Test> {
 	useJUnitPlatform()
 }
-
-/*
-tasks.bootJar {
-	archiveFileName.set("sportevents.jar")
-}
-*/
