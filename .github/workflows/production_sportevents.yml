@@ -22,19 +22,19 @@ jobs:
         with:
           java-version: '17'
 
-      - name: Build with Gradle
-        run: ./gradlew clean build
-
-      - name: List files in target directory
-        run: ls -R /home/runner/work/app-for-organizing-sports-activities-backend/app-for-organizing-sports-activities-backend/build/libs/
-
       - name: Replace placeholders with secrets
         env:
           MONGO_URI: ${{ secrets.MONGO_URI }}
           JWT_SECRET: ${{ secrets.JWT_SECRET }}
         run: |
           sed -i "s|\\${MONGO_URI}|${MONGO_URI}|g" src/main/resources/application.properties
-          sed -i "s|\\${JWT_SECRET}|${JWT_SECRET}|g" src/main/resources/application.properties
+          sed -i "s|\\${JWT_SECRET}|${JWT_SECRET}|g" src/main/resources/application.properties    
+
+      - name: Build with Gradle
+        run: ./gradlew clean build
+
+      - name: List files in target directory
+        run: ls -R /home/runner/work/app-for-organizing-sports-activities-backend/app-for-organizing-sports-activities-backend/build/libs/
 
       - name: Print MONGO_URI
         run: echo ${{ secrets.MONGO_URI }}
