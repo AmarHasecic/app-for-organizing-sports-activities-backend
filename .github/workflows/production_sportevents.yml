@@ -35,6 +35,9 @@ jobs:
         run: |
           sed -i "s|\\${MONGO_URI}|${MONGO_URI}|g" src/main/resources/application.properties
           sed -i "s|\\${JWT_SECRET}|${JWT_SECRET}|g" src/main/resources/application.properties
+
+      - name: Print MONGO_URI
+        run: echo ${{ secrets.MONGO_URI }}
       
 
       - name: Upload artifact for deployment job
