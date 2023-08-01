@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.springframework.boot.gradle.tasks.bundling.BootJar
 
 
 plugins {
@@ -59,8 +60,8 @@ tasks.withType<Test> {
 	useJUnitPlatform()
 }
 
-/*
-tasks.bootJar {
-	archiveFileName.set("sportevents.jar")
+tasks.withType<BootJar> {
+	manifest {
+		attributes["Main-Class"] = "ba.unsa.etf.sportevents.SporteventsApplication"
+	}
 }
-*/
