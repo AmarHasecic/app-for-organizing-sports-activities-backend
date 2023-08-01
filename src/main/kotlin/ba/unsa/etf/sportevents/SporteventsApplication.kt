@@ -1,15 +1,15 @@
 package ba.unsa.etf.sportevents
 
-import io.jsonwebtoken.SignatureAlgorithm
-import io.jsonwebtoken.security.Keys
+import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
-import org.springframework.boot.runApplication
-import java.util.*
+
 
 @SpringBootApplication
-class SporteventsApplication
-
-fun main(args: Array<String>) {
-
-	runApplication<SporteventsApplication>(*args)
+class SporteventsApplication {
+	companion object {
+		@JvmStatic
+		fun main(args: Array<String>) {
+			SpringApplication.run(SporteventsApplication::class.java, *args)
+		}
+	}
 }

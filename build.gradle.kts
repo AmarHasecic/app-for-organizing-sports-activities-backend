@@ -48,20 +48,3 @@ dependencies {
 
 
 }
-
-tasks.withType<KotlinCompile> {
-	kotlinOptions {
-		freeCompilerArgs = listOf("-Xjsr305=strict")
-		jvmTarget = "17"
-	}
-}
-
-tasks.withType<Test> {
-	useJUnitPlatform()
-}
-
-tasks.withType<BootJar> {
-	manifest {
-		attributes["Main-Class"] = "ba.unsa.etf.sportevents.SporteventsApplication"
-	}
-}
