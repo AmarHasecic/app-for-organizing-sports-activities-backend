@@ -6,8 +6,8 @@ import java.util.*
 
 object JwtUtil {
 
-    val file = java.io.File("src/main/resources/secretKey.txt")
-    private var SECRET: String = file.readText().trim()
+
+    private var SECRET: String = System.getenv("JWT_KEY") ?: "Kljuc nije dohvacen"
     private const val EXPIRATION_TIME = 864000000 // 10 days
 
     fun generateToken(id: String): String {

@@ -62,7 +62,7 @@ class UserController(private val userRepository: UserRepository) {
         val userIdFromToken = JwtUtil.getIdFromToken(token.substringAfter("Bearer ").trim())
 
         if (!JwtUtil.validateToken(token.substringAfter("Bearer ").trim())) {
-            // Return an HTTP 401 Unauthorized response if the token is invalid or has expired
+
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build()
         }
 
