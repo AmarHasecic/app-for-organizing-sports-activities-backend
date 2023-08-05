@@ -79,9 +79,11 @@ class UserController(private val userRepository: UserRepository) {
     @PostMapping("/user")
     fun createUser(@RequestBody user: User): ResponseEntity<Any> {
 
-        if (userRepository.existsById(user.username)) {
+        if (userRepository.findByUsername(user.username)!=null) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("User with username ${user.username} already exists")
         }
+
+        //dodati provjeru email-a
 
         user.id = generateId();
         user.password = hashPassword(user.password)
@@ -121,7 +123,7 @@ class UserController(private val userRepository: UserRepository) {
                 val jwt = JwtUtil.generateToken(user.id)
                 ResponseEntity.ok(mapOf("jwt" to jwt))
             } else {
-                ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Password incorrect")
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Password incorrect")
             }
         }
 
