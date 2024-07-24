@@ -24,7 +24,6 @@ Welcome to the Sport Events backend repository! This Spring Boot application ser
 
 5. **Build and Run**: Use Gradle to build the project and run it with your IDE or the command line.
 
-6. **API Documentation**: Explore the API endpoints and their documentation, available at `http://localhost:8080/swagger-ui.html`.
 
 ## Feedback and Contributions
 
